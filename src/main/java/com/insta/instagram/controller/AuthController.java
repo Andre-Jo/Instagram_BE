@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     @GetMapping("/signin")
-    public ResponseEntity<User> signinHandler(Authentication authentication) throws UserException {
+    public ResponseEntity<User> signinHandler(Authentication authentication) throws BadCredentialsException {
 
         Optional<User> opt = userRepository.findByEmail(authentication.getName());
 

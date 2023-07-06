@@ -1,10 +1,10 @@
 package com.insta.instagram.service;
 
-import com.insta.instagram.entity.User;
 import com.insta.instagram.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,14 +23,13 @@ public class UserUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<User> opt = userRepository.findByEmail(username);
+        Optional<com.insta.instagram.entity.User> opt = userRepository.findByEmail(username);
 
         if (opt.isPresent()) {
-            User user = opt.get();
+            com.insta.instagram.entity.User user = opt.get();
             List<GrantedAuthority> authorities = new ArrayList<>();
 
-
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+            return new User(user.getEmail(), user.getPassword(), authorities);
         }
 
         throw new BadCredentialsException("User Not Found With Username" + username);

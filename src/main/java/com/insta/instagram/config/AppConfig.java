@@ -4,17 +4,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
+@EnableWebSecurity
 public class AppConfig {
 
     @Bean
-    public SecurityFilterChain securityConfigration(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityConfiguration(HttpSecurity http) throws Exception {
 
         http
                 // CSRF 대책 (현재 CSRF에 대한 대책 비활성화)
@@ -28,8 +32,9 @@ public class AppConfig {
                         .anyRequest().authenticated())
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenValidationFilter(), BasicAuthenticationFilter.class)
-                // Basic 인증 사용 ( 현재 Bearer Token 인증 방법을 사용하기 때문에 비활성화)
-                .httpBasic((httpBasic) -> httpBasic.disable());
+                .formLogin(withDefaults())
+                // Basic 인증 사용
+                .httpBasic(withDefaults());
 
         return http.build();
     }

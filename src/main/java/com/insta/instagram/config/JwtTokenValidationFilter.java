@@ -28,7 +28,7 @@ public class JwtTokenValidationFilter extends OncePerRequestFilter {
 //        Bearer [Token]
         if (jwt != null) {
             try {
-                jwt = jwt.split(" ")[1];
+                jwt = jwt.substring(7);
                 SecretKey key = Keys.hmacShaKeyFor(SecurityContext.JWT_KEY.getBytes());
 
                 Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
