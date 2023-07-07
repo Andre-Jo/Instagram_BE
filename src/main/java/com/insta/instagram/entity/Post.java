@@ -26,13 +26,14 @@ public class Post {
     private Integer id;
 
     private String caption;
+    private String image;
     private String location;
     private LocalDateTime createdAt;
 
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="id", column = @Column(name = "user_id")),
-            @AttributeOverride(name="email", column = @Column(name = "user_email")),
+            @AttributeOverride(name="email", column = @Column(name = "user_email"))
     })
     private UserDto user;
 

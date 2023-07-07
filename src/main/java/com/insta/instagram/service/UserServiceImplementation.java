@@ -22,6 +22,7 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Override
@@ -111,11 +112,11 @@ public class UserServiceImplementation implements UserService {
 
         UserDto following = new UserDto();
 
-        following.setEmail(follower.getEmail());
-        following.setId(follower.getId());
-        following.setName(follower.getName());
-        following.setUsername(follower.getUsername());
-        following.setUserImage(follower.getUserImage());
+        following.setEmail(followUser.getEmail());
+        following.setId(followUser.getId());
+        following.setName(followUser.getName());
+        following.setUsername(followUser.getUsername());
+        following.setUserImage(followUser.getImage());
 
         reqUser.getFollowing().add(following);
         followUser.getFollower().add(follower);
@@ -141,11 +142,11 @@ public class UserServiceImplementation implements UserService {
 
         UserDto following = new UserDto();
 
-        following.setEmail(follower.getEmail());
-        following.setId(follower.getId());
-        following.setName(follower.getName());
-        following.setUsername(follower.getUsername());
-        following.setUserImage(follower.getUserImage());
+        following.setEmail(followUser.getEmail());
+        following.setId(followUser.getId());
+        following.setName(followUser.getName());
+        following.setUsername(followUser.getUsername());
+        following.setUserImage(followUser.getImage());
 
         reqUser.getFollowing().remove(following);
         followUser.getFollower().remove(follower);
