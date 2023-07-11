@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -36,7 +37,7 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
                     .setExpiration(new Date(new Date().getTime()+3600000))
                     .signWith(key).compact();
 
-            response.setHeader(SecurityContext.HEADER, jwt);
+            response.addHeader(SecurityContext.HEADER, jwt);
         }
 
         filterChain.doFilter(request, response);

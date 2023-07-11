@@ -28,17 +28,17 @@ public class AuthController {
     public ResponseEntity<User> registerUserHandler(@RequestBody User user) throws UserException {
 
         User createdUser = userService.registerUser(user);
-        return new ResponseEntity<User>(createdUser, HttpStatus.OK);
+        return new ResponseEntity<>(createdUser, HttpStatus.OK);
 
     }
 
     @GetMapping("/signin")
-    public ResponseEntity<User> signinHandler(Authentication authentication) throws BadCredentialsException {
+    public ResponseEntity<User> signinHandler(Authentication auth) throws BadCredentialsException {
 
-        Optional<User> opt = userRepository.findByEmail(authentication.getName());
+        Optional<User> opt = userRepository.findByEmail(auth.getName());
 
         if (opt.isPresent()) {
-            return new ResponseEntity<User>(opt.get(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(opt.get(), HttpStatus.ACCEPTED);
         }
 
         throw new BadCredentialsException("invalid Username or Password");
